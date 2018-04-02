@@ -31,7 +31,7 @@ declare -r game="minecraft"
 [[ ! -z "${GAME_COMMAND_DUMP}" ]] && declare -r GAME_COMMAND_DUMP=${GAME_COMMAND_DUMP} || GAME_COMMAND_DUMP="/tmp/${myname}_${SESSION_NAME}_command_dump.txt"
 
 # Variables passed over the command line will always override the one from a config file
-source /etc/conf.d/"${game}" 2>/dev/null || >&2 echo "Could not source /etc/conf.d/${game}"
+source /etc/"${game}"d.conf 2>/dev/null || >&2 echo "Could not source /etc/${game}d.conf"
 
 # Preserve the content of IDLE_SERVER without making it readonly
 [[ ! -z ${tmp_IDLE_SERVER} ]] && IDLE_SERVER=${tmp_IDLE_SERVER}
