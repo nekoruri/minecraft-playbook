@@ -39,3 +39,12 @@
 
     - name: default-jdk
       apt: name=default-jdk update_cache=yes cache_valid_time=3600
+
+    - name: enable minecraftd.service
+      systemd: name=minecraftd.service enabled=yes
+
+    - name: enable minecraftd-backup.service
+      systemd: name=minecraftd-backup.service enabled=yes
+
+    - name: enable minecraftd-backup.timer
+      systemd: name=minecraftd-backup.timer enabled=yes
