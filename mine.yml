@@ -1,0 +1,41 @@
+- hosts: targets
+  become: yes 
+  tasks:
+    - group: name=minecraft
+    - user: name=minecraft groups=minecraft shell=/bin/bash
+
+    - name: /usr/local/minecraft
+      file: path=/usr/local/minecraft state=directory owner=minecraft group=minecraft
+
+    - name: minecraftd.conf
+      copy: src=./files/minecraftd.conf dest=/etc/minecraftd.conf owner=root group=root mode=0644
+
+    - name: minecraftd.sh
+      copy: src=./files/minecraftd.sh dest=/usr/bin/minecraftd owner=root group=root mode=0755
+
+    - name: minecraftd.service
+      copy: src=./files/minecraftd.service dest=/lib/systemd/system/minecraftd.service owner=root group=root mode=0644
+
+    - name: minecraftd-backup.service
+      copy: src=./files/minecraftd-backup.service dest=/lib/systemd/system/minecraftd-backup.service owner=root group=root mode=0644
+
+    - name: minecraftd-backup.timer
+      copy: src=./files/minecraftd-backup.timer dest=/lib/systemd/system/minecraftd-backup.timer owner=root group=root mode=0644
+
+    - name: minecraft_server.{ver}.jar
+      copy: src=./files/minecraft_server.1.12.2.jar dest=/usr/local/minecraft/minecraft_server.1.12.2.jar owner=root group=root mode=0644
+
+    - name: minecraft_server.jar
+      file: src=/usr/local/minecraft/minecraft_server.1.12.2.jar dest=/usr/local/minecraft/minecraft_server.jar state=link
+
+    - name: eula.txt
+      copy: src=./files/eula.txt dest=/usr/local/minecraft/eula.txt owner=root group=root mode=0644
+
+    - name: /usr/local/minecraft/logs
+      file: path=/usr/local/minecraft/logs owner=minecraft group=minecraft state=directory
+
+    - name: /var/log/minecraft
+      file: src=/usr/local/minecraft/logs dest=/var/log/minecraft state=link
+
+    - name: default-jdk
+      apt: name=default-jdk update_cache=yes cache_valid_time=3600
