@@ -23,7 +23,7 @@
       copy: src=./files/minecraftd-backup.timer dest=/lib/systemd/system/minecraftd-backup.timer owner=root group=root mode=0644
 
     - name: minecraft_server.{ver}.jar
-      copy: src=./files/minecraft_server.1.12.2.jar dest=/usr/local/minecraft/minecraft_server.1.12.2.jar owner=root group=root mode=0644
+      get_url: url=https://s3.amazonaws.com/Minecraft.Download/versions/1.12.2/minecraft_server.1.12.2.jar dest=/usr/local/minecraft/minecraft_server.1.12.2.jar owner=root group=root mode=0644
 
     - name: minecraft_server.jar
       file: src=/usr/local/minecraft/minecraft_server.1.12.2.jar dest=/usr/local/minecraft/minecraft_server.jar state=link
